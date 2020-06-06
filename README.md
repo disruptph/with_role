@@ -1,8 +1,6 @@
 # WithRole
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/with_role`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Simple role feature
 
 ## Installation
 
@@ -12,17 +10,34 @@ Add this line to your application's Gemfile:
 gem 'with_role'
 ```
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install with_role
+## Migration
+```ruby
+create_table :users do |t|
+  ...
+  t.string :role
+  ...
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+# models/user.rb
+class User < ActiveRecord::Base
+  with_role
+end
+
+# config/initializers/with_role.rb
+# whitelist allowed roles
+::WithRole.configure do |config|
+  config[:available_roles] = %w(admin owner)
+end
+
+user.set_role(:admin)
+user.admin_role?
+=> true
+```
+
+
 
 ## Development
 
